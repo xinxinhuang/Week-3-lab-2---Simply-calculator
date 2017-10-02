@@ -27,6 +27,37 @@ public class function extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+            String firstStr = request.getParameter("first");
+            String secondStr = request.getParameter("second");
+            String operation = request.getParameter("operation");
+    
+    
+    if (operation!=null)
+    {
+        if (firstStr!=null && secondStr!=null && !firstStr.equals("") && !secondStr.equals(""))
+        {
+            int first = Integer.parseInt(firstStr);
+            int second = Integer.parseInt(secondStr);
+            
+            char operationType = operation.charAt(0);
+            
+            switch (operationType)
+            {
+                case '+': request.setAttribute("result", first + second);
+                    break;
+                case '-': request.setAttribute("result", first - second);
+                    break;
+                case '*': request.setAttribute("result", first * second);
+                    break;
+                case '%': request.setAttribute("result", first % second);
+                    break;
+            }
+            
+            request.setAttribute("calcPerformed", true);
+        }
+    }
+            getServletContext().getRequestDispatcher("/WEB-INF/calculator.jsp").forward(request, response);
        
     }
 
